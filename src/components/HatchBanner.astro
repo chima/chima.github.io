@@ -1,0 +1,11 @@
+---
+// Stand-in banner for posts with no heroImage. Never use stock photography here.
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+const initial = (title.trim().charAt(0) || '?').toUpperCase();
+---
+
+<div class="hatch" aria-hidden="true"><span class="hatch__initial">{initial}</span></div>

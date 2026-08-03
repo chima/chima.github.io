@@ -1,17 +1,13 @@
 ---
 interface Props {
 	date: Date;
+	/** 'long' gives "14 July 2026", 'short' gives "14 JUL" for list rows. */
+	format?: 'long' | 'short';
 }
 
-const { date } = Astro.props;
+const { date, format = 'long' } = Astro.props;
+const long = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+const short = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }).toUpperCase();
 ---
 
-<time datetime={date.toISOString()}>
-	{
-		date.toLocaleDateString('en-us', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric',
-		})
-	}
-</time>
+<time datetime={date.toISOString()}>{format === 'short' ? short : long}</time>

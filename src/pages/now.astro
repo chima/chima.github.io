@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Update this date whenever you change the page. That is the whole point of a /now page.
+const updated = 'Updated 03 Aug 2026';
+---
+
+<Base title="Now" description="What I am doing at the moment.">
+	<div class="page page-head page-head--split">
+		<h1 class="page-title">Now</h1>
+		<span class="stamp">{updated}</span>
+	</div>
+
+	<div class="page page-body">
+		<p class="lede">Two weeks at the beach in Omi&scaron;, on the Croatian coast.</p>
+
+		<div class="now-rows">
+			<div class="now-row">
+				<span class="now-row__label">Working</span>
+				<span class="now-row__text">Nothing, deliberately. Back to backend work in September.</span>
+			</div>
+			<div class="now-row">
+				<span class="now-row__label">Body</span>
+				<span class="now-row__text">Swimming every morning before it gets busy.</span>
+			</div>
+			<div class="now-row">
+				<span class="now-row__label">Reading</span>
+				<span class="now-row__text">Two books at once, finishing neither.</span>
+			</div>
+			<div class="now-row">
+				<span class="now-row__label">Not doing</span>
+				<span class="now-row__text">Anything that needs a standing meeting.</span>
+			</div>
+		</div>
+	</div>
+</Base>

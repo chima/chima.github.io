@@ -1,0 +1,43 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import { groupByYear, readingMinutes, type Post } from '../lib/posts';
+
+interface Props {
+	posts: Post[];
+	/** 'full' for the home page, 'compact' for the archive. */
+	variant?: 'full' | 'compact';
+}
+
+const { posts, variant = 'full' } = Astro.props;
+const groups = groupByYear(posts);
+---
+
+{
+	groups.map((group) => (
+		<div class="year-group">
+			<div class="year-group__year">{group.year}</div>
+			<div class="year-group__items">
+				{group.posts.map((post) =>
+					variant === 'compact' ? (
+						<a class="row" href={'/blog/' + post.id + '/'}>
+							<span class="row__date">
+								<FormattedDate date={post.data.pubDate} format="short" />
+							</span>
+							<span class="row__title">{post.data.title}</span>
+							<span class="row__mins">{readingMinutes(post.body)} MIN</span>
+						</a>
+					) : (
+						<a class="entry" href={'/blog/' + post.id + '/'}>
+							<div class="entry__title">{post.data.title}</div>
+							<div class="entry__desc">{post.data.description}</div>
+							<div class="entry__meta">
+								<FormattedDate date={post.data.pubDate} format="short" /> &middot;{' '}
+								{readingMinutes(post.body)} MIN
+							</div>
+						</a>
+					),
+				)}
+			</div>
+		</div>
+	))
+}

@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { EMAIL, GITHUB } from '../consts';
+---
+
+<Base title="Contact" description="How to reach me.">
+	<div class="page page-head">
+		<h1 class="page-title">Contact</h1>
+	</div>
+
+	<div class="page page-body">
+		<p class="lede">Email is best. I read everything and reply to most of it, eventually.</p>
+
+		<ul class="contact-list">
+			<li>
+				<a class="contact-item" href={'mailto:' + EMAIL}>
+					<span class="contact-item__name">Email</span>
+					<span class="contact-item__value">{EMAIL}</span>
+				</a>
+			</li>
+			<li>
+				<a class="contact-item" href={GITHUB}>
+					<span class="contact-item__name">GitHub</span>
+					<span class="contact-item__value">@chima</span>
+				</a>
+			</li>
+			<li>
+				<a class="contact-item" href="/rss.xml">
+					<span class="contact-item__name">RSS</span>
+					<span class="contact-item__value">/rss.xml</span>
+				</a>
+			</li>
+		</ul>
+
+		<p class="note">No form, no newsletter box, nothing to maintain.</p>
+	</div>
+</Base>
