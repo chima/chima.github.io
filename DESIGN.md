@@ -10,7 +10,7 @@ If you add one later, tune it as its own palette — do not invert these values.
 | `--bg` | #211f1c | page ground (warm graphite) |
 | `--bg-elevated` | #282520 | code blocks |
 | `--bg-code` | #2e2b25 | inline code |
-| `--bg-slot` | #2b2823 | image placeholders |
+| `--bg-slot` | #2b2823 | hatch banner ground |
 | `--footer-bg` | #1b1916 | footer |
 | `--rule` | #302d28 | list dividers |
 | `--rule-strong` | #35322c | section rules |

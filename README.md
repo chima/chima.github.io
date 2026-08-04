@@ -1,63 +1,79 @@
-# Astro Starter Kit: Blog
+# chima.github.io
 
-```sh
-npm create astro@latest -- --template blog
-```
+Source for **Chima's cavern** — a personal site and blog. Static, built with Astro,
+deployed to GitHub Pages at <https://chima.github.io>.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Mostly engineering notes. Written to think, published in case it helps.
 
-Features:
+## Stack
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+- [Astro](https://astro.build) 7, static output, zero client-side JavaScript
+- `@astrojs/mdx`, `@astrojs/rss`, `@astrojs/sitemap`
+- Hand-written CSS in `src/styles/global.css` — no framework, no build-time CSS tooling
+- Dark palette only, no theme toggle. See [DESIGN.md](DESIGN.md)
+- No analytics, no tracking, no cookie banner, no forms
 
-## 🚀 Project Structure
+Requires Node 22.12 or newer.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Commands
+
+| Command | Action |
+| :--- | :--- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Dev server on `localhost:4321` |
+| `npm run build` | Build to `./dist/` |
+| `npm run preview` | Serve the built output locally |
+| `npm run astro check` | Type-check components and content frontmatter |
+
+## Structure
 
 ```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+src/
+├── components/    BaseHead, Header, Footer, PostList, HatchBanner, PullQuote, Sidenote
+├── content/blog/  posts, one Markdown file each
+├── layouts/       Base (shell) and BlogPost (reading column)
+├── lib/posts.ts   shared post queries — sorting, draft filtering, tag collection
+├── pages/         routes; file name is the URL
+├── styles/        global.css, the whole stylesheet
+├── consts.ts      site title, description, author, email, links
+└── content.config.ts   the blog collection schema
+public/            favicons, served from the root
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Routes: `/`, `/blog`, `/blog/<slug>`, `/topics`, `/topics/<tag>`, `/about`, `/now`,
+`/contact`, plus `/rss.xml` and `/sitemap-index.xml`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Writing a post
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+Add a Markdown file to `src/content/blog/`. The file name becomes the URL slug.
+Frontmatter is validated against the schema in `src/content.config.ts`:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```yaml
+---
+title: Taking apart the blog
+description: One sentence, used in listings, RSS, and meta tags.
+pubDate: 2026-08-03
+updatedDate: 2026-08-04   # optional
+category: Engineering     # optional, shown as the eyebrow above the title
+tags: [astro, design]     # optional, drives /topics
+heroImage: ../../assets/thing.jpg   # optional; omit for a generated hatch banner
+heroCaption: What the image shows.  # optional
+draft: false              # true keeps it out of listings, RSS, and the sitemap
+---
+```
 
-## 🧞 Commands
+A post with no `heroImage` gets a `HatchBanner` — a CSS band carrying the title's
+initial. That is deliberate; do not fill the slot with stock art.
 
-All commands are run from the root of the project, from a terminal:
+## Deploying
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Push to `main`. `.github/workflows/deploy.yml` builds with `withastro/action` and
+publishes to GitHub Pages. There is no staging environment and no PR flow.
 
-## 👀 Want to learn more?
+`site:` in `astro.config.mjs` must match the deployed origin — it is compiled into the
+sitemap and the RSS feed's absolute URLs at build time.
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Notes for contributors and agents
 
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+[DESIGN.md](DESIGN.md) holds the design rules and the colour and type tokens.
+[CLAUDE.md](CLAUDE.md) holds instructions for coding agents.

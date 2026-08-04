@@ -24,8 +24,10 @@
 	--accent-code: #e6c6a8;
 	--accent-faint: rgba(217, 138, 95, 0.35);
 
-	--serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-	--mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+	/* Defined by the <Font /> components in BaseHead; the fallback chain comes with
+	   them, from `fallbacks` in astro.config.mjs. */
+	--serif: var(--font-serif);
+	--mono: var(--font-mono);
 
 	--page: 720px;
 	--page-wide: 940px;
@@ -424,27 +426,6 @@ img {
 	font: 400 140px/0.78 var(--serif);
 	color: rgba(217, 138, 95, 0.22);
 	user-select: none;
-}
-
-/* image placeholder, e.g. the about portrait */
-.slot {
-	background:
-		repeating-linear-gradient(
-			135deg,
-			rgba(224, 219, 208, 0.05) 0 2px,
-			transparent 2px 11px
-		),
-		var(--bg-slot);
-	border-radius: 2px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-	padding: 0 10px;
-	font: 400 10.5px/1.5 var(--mono);
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-	color: var(--text-muted);
 }
 
 /* ---------- prose ---------- */
@@ -924,13 +905,22 @@ img {
 	padding-top: 60px;
 }
 
-.about-grid .slot {
-	height: 240px;
+/* 200x240 is exactly 5:6, matching the column width in .about-grid. The source is
+   1888x2272 (0.8310), so `cover` trims ~6px rather than squeezing the frame. */
+.portrait {
+	width: 200px;
+	aspect-ratio: 5 / 6;
+	height: auto;
+	object-fit: cover;
+	border-radius: 2px;
+	display: block;
 }
 
 .facts {
 	display: grid;
 	grid-template-columns: auto 1fr;
+	/* Mono labels sit on the same baseline as their serif values. */
+	align-items: baseline;
 	gap: 10px 18px;
 	margin: 30px 0 0;
 	border-top: 1px solid var(--rule-strong);
@@ -1081,8 +1071,10 @@ img {
 		gap: 24px;
 	}
 
-	.about-grid .slot {
-		height: 200px;
+	/* Single column here — keep the portrait at its own size rather than letting it
+	   stretch to the full width and become a letterbox. */
+	.portrait {
+		width: 160px;
 	}
 
 	.site-footer__cols {

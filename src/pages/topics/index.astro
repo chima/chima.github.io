@@ -16,9 +16,7 @@ function size(count: number) {
 <Base title="Topics" description="What I write about, sized by how often.">
 	<div class="page page-head">
 		<h1 class="page-title">Topics</h1>
-		<p class="page-lede">
-			Set in the size of their count, so the shape of what you write is visible at a glance.
-		</p>
+		<p class="page-lede">Sized by how often they come up.</p>
 	</div>
 
 	<div class="page page-body">
@@ -35,13 +33,8 @@ function size(count: number) {
 					))}
 				</ul>
 			) : (
-				<p class="note">
-					No tags yet. Add a <code>tags</code> array to a post&rsquo;s frontmatter and it shows up here.
-				</p>
+				<p class="note">No topics yet.</p>
 			)
 		}
-		<p class="note">
-			Each topic has its own page listing only those posts &mdash; no filtering JavaScript, all static.
-		</p>
 	</div>
 </Base>
